@@ -3,6 +3,9 @@ const {
   subtraction,
   multiplication,
   division,
+  modulo,
+  power,
+  squareRoot,
 } = require('../calculator');
 
 describe('addition', () => {
@@ -73,5 +76,50 @@ describe('division', () => {
 
   test('divisão por zero negativo lança erro', () => {
     expect(() => division(10, -0)).toThrow();
+  });
+});
+
+describe('modulo', () => {
+  test.each([
+    [5, 2, 1],
+    [10, 3, 1],
+    [-10, 3, -1],
+    [10, -3, 1],
+    [8, 2, 0],
+  ])('%p %% %p = %p', (a, b, expected) => {
+    expect(modulo(a, b)).toBe(expected);
+  });
+
+  test('módulo por zero lança erro', () => {
+    expect(() => modulo(10, 0)).toThrow('Módulo por zero não é permitido.');
+  });
+});
+
+describe('power', () => {
+  test.each([
+    [2, 3, 8],
+    [5, 0, 1],
+    [2, -2, 0.25],
+    [-3, 2, 9],
+  ])('%p elevado a %p = %p', (base, exponent, expected) => {
+    expect(power(base, exponent)).toBe(expected);
+  });
+});
+
+describe('squareRoot', () => {
+  test.each([
+    [0, 0],
+    [1, 1],
+    [9, 3],
+    [16, 4],
+    [2, Math.sqrt(2)],
+  ])('raiz quadrada de %p = %p', (n, expected) => {
+    expect(squareRoot(n)).toBe(expected);
+  });
+
+  test('raiz quadrada de número negativo lança erro', () => {
+    expect(() => squareRoot(-1)).toThrow(
+      'Não é possível calcular a raiz quadrada de um número negativo.'
+    );
   });
 });
